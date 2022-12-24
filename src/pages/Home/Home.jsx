@@ -20,11 +20,16 @@ const Home = () => {
   // Get all sector information from the database
   const getSectors = async () => {
     try {
-      const { data } = await axios.get("https://simple-servey-server.onrender.com/sectors");
+      setLoading(true);
+      const { data } = await axios.get(
+        "https://simple-servey-server.onrender.com/sectors"
+      );
       if (data.success) {
         setData(data.data);
+        setLoading(false);
       }
     } catch (err) {
+      setLoading(false);
       console.log(err);
     }
   };
@@ -32,7 +37,7 @@ const Home = () => {
   // Call the asynchronous function
   useEffect(() => {
     getSectors();
-  });
+  }, []);
 
   // Handle Save Information
   const handleSubmit = async (e) => {
@@ -45,7 +50,10 @@ const Home = () => {
     const terms = e.target.terms.checked;
     const data = { name, email, sector, subSector, terms };
     if (email && name && sector && terms) {
-      const { result } = await axios.put("https://simple-servey-server.onrender.com/save", data);
+      const { result } = await axios.put(
+        "https://simple-servey-server.onrender.com/save",
+        data
+      );
       toast.remove("loading");
       toast.success("Info Saved successfully", { id: "success" });
       console.log(result);
