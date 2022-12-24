@@ -91,6 +91,10 @@ option:disabled {
     justify-content: flex-end;
 }
 
+.submit_btn_wrapper input {
+    display: none;
+}
+
 .submit_btn {
     all: unset;
     padding: 10px 25px;
@@ -101,12 +105,19 @@ option:disabled {
     transition: all .3s;
 }
 
+.submit_btn:active {
+    transform: scale(95%);
+}
 
+.submit_btn:hover {
+    background-color: #646cff;
+}
 
 .bold_text {
     font-weight: 700;
 }
 
-.submit_btn:hover {
-    background-color: #646cff;
+input:invalid,
+select:invalid {
+    border: 1px solid var(--error);
 }

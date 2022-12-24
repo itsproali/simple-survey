@@ -1,0 +1,17 @@
+[
+    {
+        "name": "Mohammad Ali", 
+        "email": "itsproali@gmail.com",
+        "sector": "Information Technology",
+        "subSector": "Programming",
+        "terms": true
+    },
+    {
+        "name": "Fake User", 
+        "email": "fake@gmail.com",
+        "sector": "Furniture",
+        "subSector": "Bedroom",
+        "terms": true
+    }
+
+]

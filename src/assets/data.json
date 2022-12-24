@@ -1,0 +1,86 @@
+[
+    {
+      "title": "Manufacturing",
+      "sub": [
+        { "title": "Construction materials" },
+        { "title": "Electronics & Optics" },
+        {
+          "title": "Food/Beverage",
+          "subOfSub": [
+            { "title": "Bakery/confectionery products" },
+            { "title": "Beverage" },
+            { "title": "Fish/fish products" },
+            { "title": "Meat/meat products" },
+            { "title": "Milk/dairy products" },
+            { "title": "Sweets/snack food" },
+            { "title": "Other (Food/Beverage)" }
+          ]
+        },
+        {
+          "title": "Furniture",
+          "subOfSub": [
+            { "title": "Bathroom/sauna" },
+            { "title": "Bedroom" },
+            { "title": "Children's room" },
+            { "title": "Kitchen" },
+            { "title": "Living room" },
+            { "title": "Office" },
+            { "title": "Outdoor" },
+            { "title": "Project furniture" },
+            { "title": "Other (furniture)" }
+          ]
+        },
+        {
+          "title": "Machinery",
+          "subOfSub": [
+            { "title": "Machinery components" },
+            { "title": "Machinery tools" },
+            { "title": "manufacture of machinery" },
+            { "title": "Maritime" },
+            { "title": "Aluminium and steel workboats" },
+            { "title": "Boat/Yacht building" },
+            { "title": "Ship repair and conversion" },
+            { "title": "Metal Structures" },
+            { "title": "Repair and maintenance service" },
+            { "title": "Other (Machinery)" }
+          ]
+        },
+        { "title": "Metal working", "subOfSub": [] }
+      ]
+    },
+    {
+      "title": "Service",
+      "sub": [
+        { "title": "Business Services" },
+        { "title": "Engineering" },
+        {
+          "title": "Information Technology",
+          "subOfSub": [
+            { "title": "Data Processing, Web portals" },
+            { "title": "Programming" },
+            { "title": "Software, Hardware" },
+            { "title": "Telecommunications" }
+          ]
+        },
+        { "title": "Tourism" },
+        { "title": "Translation service" },
+        {
+          "title": "Transport and Logistics",
+          "subOfSub": [
+            { "title": "Air" },
+            { "title": "Rail" },
+            { "title": "Road" },
+            { "title": "Water" }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Others",
+      "sub": [
+        { "title": "Creative Industries" },
+        { "title": "Evergy Technology" },
+        { "title": "Environment" }
+      ]
+    }
+  ]

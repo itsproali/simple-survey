@@ -1,107 +1,60 @@
-import React, { useState } from "react";
-import "./Home.css";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
 import { FaUserAlt } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
+import "./Home.css";
+
+/**
+ * Go to assets/data.json to explore the structure of the Data
+ *
+ * Go to assets/users.json to explore the structure of saving user provided informations
+ *
+ */
 
 const Home = () => {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [currentSector, setCurrentSector] = useState(null);
-  const handleSubmit = (e) => {
+
+  // Get all sector information from the database
+  const getSectors = async () => {
+    try {
+      const { data } = await axios.get("https://simple-servey-server.onrender.com/sectors");
+      if (data.success) {
+        setData(data.data);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  // Call the asynchronous function
+  useEffect(() => {
+    getSectors();
+  });
+
+  // Handle Save Information
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    toast.loading("Please wait a moment", { id: "loading" });
     const name = e.target.name.value;
     const email = e.target.email.value;
     const sector = e.target.sector.value;
-    const subSector = e.target.subSector.value;
+    const subSector = e.target?.subSector?.value || "";
     const terms = e.target.terms.checked;
     const data = { name, email, sector, subSector, terms };
-    console.log(data);
+    if (email && name && sector && terms) {
+      const { result } = await axios.put("https://simple-servey-server.onrender.com/save", data);
+      toast.remove("loading");
+      toast.success("Info Saved successfully", { id: "success" });
+      console.log(result);
+    }
   };
 
-  const data = [
-    {
-      title: "Manufacturing",
-      sub: [
-        { title: "Construction materials" },
-        { title: "Electronics & Optics" },
-        {
-          title: "Food/Beverage",
-          subOfSub: [
-            { title: "Bakery/confectionery products" },
-            { title: "Beverage" },
-            { title: "Fish/fish products" },
-            { title: "Meat/meat products" },
-            { title: "Milk/dairy products" },
-            { title: "Sweets/snack food" },
-            { title: "Other (Food/Beverage)" },
-          ],
-        },
-        {
-          title: "Furniture",
-          subOfSub: [
-            { title: "Bathroom/sauna" },
-            { title: "Bedroom" },
-            { title: "Children's room" },
-            { title: "Kitchen" },
-            { title: "Living room" },
-            { title: "Office" },
-            { title: "Outdoor" },
-            { title: "Project furniture" },
-            { title: "Other (furniture)" },
-          ],
-        },
-        {
-          title: "Machinery",
-          subOfSub: [
-            { title: "Machinery components" },
-            { title: "Machinery tools" },
-            { title: "manufacture of machinery" },
-            { title: "Maritime" },
-            { title: "Aluminium and steel workboats" },
-            { title: "Boat/Yacht building" },
-            { title: "Ship repair and conversion" },
-            { title: "Metal Structures" },
-            { title: "Repair and maintenance service" },
-            { title: "Other (Machinery)" },
-          ],
-        },
-        { title: "Metal working", subOfSub: [] },
-      ],
-    },
-    {
-      title: "Service",
-      sub: [
-        { title: "Business Services" },
-        { title: "Engineering" },
-        {
-          title: "Information Technology",
-          subOfSub: [
-            { title: "Data Processing, Web portals" },
-            { title: "Programming" },
-            { title: "Software, Hardware" },
-            { title: "Telecommunications" },
-          ],
-        },
-        { title: "Tourism" },
-        { title: "Translation service" },
-        {
-          title: "Transport and Logistics",
-          subOfSub: [
-            { title: "Air" },
-            { title: "Rail" },
-            { title: "Road" },
-            { title: "Water" },
-          ],
-        },
-      ],
-    },
-    {
-      title: "Others",
-      sub: [
-        { title: "Creative Industries" },
-        { title: "Evergy Technology" },
-        { title: "Environment" },
-      ],
-    },
-  ];
+  if (loading) {
+    return <p>Loading ...</p>;
+  }
 
   return (
     <div>
@@ -147,10 +100,8 @@ const Home = () => {
                 name="sector"
                 id="sector"
                 onChange={(e) => setCurrentSector(e.target.value)}
+                required
               >
-                <option value={null} disabled selected>
-                  -- Select a Sector ---
-                </option>
                 {data.map((sector) => (
                   <>
                     <option key={sector.title} value={sector.title} disabled>
@@ -195,7 +146,7 @@ const Home = () => {
 
           {/* Terms */}
           <label htmlFor="terms" className="terms">
-            <input type="checkbox" name="terms" id="terms" />
+            <input type="checkbox" name="terms" id="terms" required />
             <span>Agree to Terms & Conditions</span>
           </label>
 
