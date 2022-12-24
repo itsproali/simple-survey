@@ -14,8 +14,9 @@ import "./Home.css";
 
 const Home = () => {
   const [data, setData] = useState([]);
+  const [userData, setUserData] = useState({});
   const [loading, setLoading] = useState(false);
-  const [currentSector, setCurrentSector] = useState(null);
+  const [currentSector, setCurrentSector] = useState(userData?.sector);
 
   // Get all sector information from the database
   const getSectors = async () => {
@@ -39,6 +40,14 @@ const Home = () => {
     getSectors();
   }, []);
 
+  useEffect(() => {
+    const prevData = localStorage.getItem("userData");
+    if (prevData) {
+      setUserData(JSON.parse(prevData));
+      setLoading(false);
+    }
+  }, []);
+
   // Handle Save Information
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -56,6 +65,7 @@ const Home = () => {
       );
       toast.remove("loading");
       toast.success("Info Saved successfully", { id: "success" });
+      localStorage.setItem("userData", JSON.stringify(data));
       console.log(result);
     }
   };
@@ -82,6 +92,7 @@ const Home = () => {
                 id="name"
                 placeholder="Enter your Full Name"
                 required
+                defaultValue={userData?.name}
               />
             </label>
           </div>
@@ -96,6 +107,7 @@ const Home = () => {
                 id="email"
                 placeholder="Enter your Full Email"
                 required
+                defaultValue={userData?.email}
               />
             </label>
           </div>
@@ -109,6 +121,7 @@ const Home = () => {
                 id="sector"
                 onChange={(e) => setCurrentSector(e.target.value)}
                 required
+                defaultValue={userData?.sector}
               >
                 {data.map((sector) => (
                   <>
@@ -154,7 +167,13 @@ const Home = () => {
 
           {/* Terms */}
           <label htmlFor="terms" className="terms">
-            <input type="checkbox" name="terms" id="terms" required />
+            <input
+              type="checkbox"
+              name="terms"
+              id="terms"
+              required
+              defaultChecked={userData?.terms}
+            />
             <span>Agree to Terms & Conditions</span>
           </label>
 
